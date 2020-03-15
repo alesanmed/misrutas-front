@@ -1,7 +1,11 @@
 {
   "name": "rutas-front",
-  "version": "0.1.0",
-  "private": true,
+  "version": "0.0.1",
+  "description": "Front page for MisRutas project",
+  "author": "Ale Sanchez <alesanchezmedina@gmail.com>",
+  "repository": {
+    "url": "https://github.com/alesanmed/misrutas-front.git"
+  },
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
