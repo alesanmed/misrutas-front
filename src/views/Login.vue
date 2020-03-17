@@ -61,8 +61,14 @@ export default {
     };
   },
   methods: {
-    login: async () => {
-      await this.$store.dispatch(AUTH_REQUEST);
+    async login() {
+      try {
+        await this.$store.dispatch(AUTH_REQUEST, this.user);
+
+        this.$router.push('/').catch((e) => console.log(e));
+      } catch (e) {
+        console.log(e);
+      }
     },
   },
 };

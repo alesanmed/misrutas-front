@@ -5,7 +5,7 @@
     :center.sync="center"
     :options="mapOptions"
     :style="{ height: '100%', 'z-index': 0 }"
-    @click="props.addMarker"
+    @click="addMarker"
   >
     <l-tile-layer
       :url="url"
@@ -13,7 +13,7 @@
     />
     <v-geosearch :options="geosearchOptions" />
     <l-marker
-      v-for="marker in props.markers"
+      v-for="marker in markers"
       :key="marker.id"
       :lat-lng="marker.position"
       :icon="icon"
@@ -32,7 +32,7 @@
           </v-row>
           <v-row>
             <v-col cols="12">
-              <v-btn @click="props.deleteMarker(marker)">
+              <v-btn @click="deleteMarker(marker)">
                 Borrar
               </v-btn>
             </v-col>

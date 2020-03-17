@@ -2,7 +2,6 @@ import Axios from 'axios';
 import {
   AUTH_REQUEST, AUTH_ERROR, AUTH_SUCCESS, AUTH_LOGOUT,
 } from '../actions/auth';
-import { USER_REQUEST } from '../actions/user';
 import { login } from '../../api/auth';
 
 const initialState = {
@@ -16,7 +15,7 @@ const getters = {
 };
 
 const actions = {
-  [AUTH_REQUEST]: async ({ commit, dispatch }, user) => {
+  [AUTH_REQUEST]: async ({ commit }, user) => {
     try {
       commit(AUTH_REQUEST);
 
@@ -28,8 +27,6 @@ const actions = {
       Axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 
       commit(AUTH_SUCCESS, token);
-
-      dispatch(USER_REQUEST);
 
       return res;
     } catch (e) {
@@ -64,7 +61,7 @@ const mutations = {
 };
 
 export default {
-  initialState,
+  state: initialState,
   getters,
   actions,
   mutations,
