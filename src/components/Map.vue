@@ -1,17 +1,20 @@
 <template>
   <l-map
+    ref="mapElement"
     :zoom="zoom"
     :center.sync="center"
     :options="mapOptions"
     :style="{ height: '100%', 'z-index': 0 }"
-    @click="addMarker"
-    ref="mapElement"
+    @click="props.addMarker"
   >
-    <l-tile-layer :url="url" :attribution="attribution" />
-    <v-geosearch :options="geosearchOptions"></v-geosearch>
+    <l-tile-layer
+      :url="url"
+      :attribution="attribution"
+    />
+    <v-geosearch :options="geosearchOptions" />
     <l-marker
-      v-for="marker in markers"
-      v-bind:key="marker.id"
+      v-for="marker in props.markers"
+      :key="marker.id"
       :lat-lng="marker.position"
       :icon="icon"
     >
@@ -19,17 +22,19 @@
         <v-container>
           <v-row>
             <v-col cols="12">
-              <v-subheader>{{TYPES[marker.type]}}</v-subheader>
+              <v-subheader>{{ TYPES[marker.type] }}</v-subheader>
             </v-col>
           </v-row>
           <v-row>
             <v-col cols="12">
-              <span class="body-2">{{marker.name}}</span>
+              <span class="body-2">{{ marker.name }}</span>
             </v-col>
           </v-row>
           <v-row>
             <v-col cols="12">
-              <v-btn @click="deleteMarker(marker)">Borrar</v-btn>
+              <v-btn @click="props.deleteMarker(marker)">
+                Borrar
+              </v-btn>
             </v-col>
           </v-row>
         </v-container>
@@ -39,52 +44,62 @@
 </template>
 
 <script>
-import { latLng, icon } from "leaflet";
-import { LMap, LTileLayer } from "vue2-leaflet";
-import { OpenStreetMapProvider } from "leaflet-geosearch";
-import VGeosearch from "vue2-leaflet-geosearch";
+import { latLng, icon } from 'leaflet';
+import { LMap, LTileLayer } from 'vue2-leaflet';
+import { OpenStreetMapProvider } from 'leaflet-geosearch';
+import VGeosearch from 'vue2-leaflet-geosearch';
 
 export default {
-  name: "Map",
+  name: 'Map',
   components: {
     LMap,
     LTileLayer,
-    VGeosearch
+    VGeosearch,
   },
   props: {
-    markers: Array,
-    addMarker: Function,
-    deleteMarker: Function
+    markers: {
+      type: Array,
+      default: () => [],
+    },
+    addMarker: {
+      type: Function,
+      default: () => {},
+    },
+    deleteMarker: {
+      type: Function,
+      default: () => {},
+    },
   },
   data() {
     return {
       zoom: 13,
       center: this.markers[0]?.position || latLng(40.416775, -3.70379),
-      url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+      url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       attribution:
         '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
       mapOptions: {
-        zoomSnap: 0.5
+        zoomSnap: 0.5,
       },
       icon: icon({
-        iconUrl: require("../assets/map/marker.png"),
+        // eslint-disable-next-line global-require
+        iconUrl: require('../assets/map/marker.png'),
         iconSize: [32, 37],
-        iconAnchor: [16, 37]
+        iconAnchor: [16, 37],
       }),
       TYPES: {
         route: 'Ruta',
-        town: 'Pueblo'
+        town: 'Pueblo',
       },
       showMap: true,
       geosearchOptions: {
-        provider: new OpenStreetMapProvider()
-      }
+        provider: new OpenStreetMapProvider(),
+      },
     };
   },
   methods: {
     updateCenter(latlng) {
       this.center = latlng;
-    }
-  }
+    },
+  },
 };
 </script>

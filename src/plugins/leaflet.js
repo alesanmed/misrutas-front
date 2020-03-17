@@ -1,5 +1,7 @@
 import Vue from 'vue';
-import { LMap, LTileLayer, LMarker, LPopup } from 'vue2-leaflet';
+import {
+  LMap, LTileLayer, LMarker, LPopup,
+} from 'vue2-leaflet';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet-geosearch/assets/css/leaflet.css';
 

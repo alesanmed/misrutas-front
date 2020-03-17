@@ -2,19 +2,30 @@
   <v-app>
     <Header />
     <v-content>
-      <router-view/>
+      <router-view />
     </v-content>
   </v-app>
 </template>
 
 <script>
-import Header from './components/Header';
+import Axios from 'axios';
+import Header from './components/Header.vue';
+import { AUTH_LOGOUT } from './store/actions/auth';
 
 export default {
   name: 'App',
-
   components: {
     Header,
+  },
+  created: () => {
+    Axios.interceptors.response.use(undefined, (err) => {
+      if (err.status === 401 && !err.config?.__isRetryRequest) {
+        this.$store.dispatch(AUTH_LOGOUT);
+        this.$router.push('/login');
+      }
+
+      throw err;
+    });
   },
 };
 </script>

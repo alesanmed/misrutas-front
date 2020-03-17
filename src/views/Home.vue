@@ -2,66 +2,107 @@
   <div class="home">
     <v-container fluid>
       <v-row>
-        <v-col cols="12">Este es tu mapa con rutas, pueblos y ciudades</v-col>
+        <v-col cols="12">
+          Este es tu mapa con rutas, pueblos y ciudades
+        </v-col>
       </v-row>
       <v-row>
-        <v-col cols="12" sm="12" md="3" 
+        <v-col
+          v-if="!newMarkerForm"
+          cols="12"
+          sm="12"
+          md="3"
           order="1"
           order-md="0"
-          v-if="!newMarkerForm" 
-          :style="getMarkerListStyle()">
+          :style="getMarkerListStyle()"
+        >
           <v-subheader>Tus sitios</v-subheader>
-          <v-list 
-            three-line >
-            <v-list-item 
-              v-for="marker in markers" 
-              v-bind:key="marker.id" 
+          <v-list
+            three-line
+          >
+            <v-list-item
+              v-for="marker in markers"
+              :key="marker.id"
               link
-              @click="updateCenter(marker)">
+              @click="updateCenter(marker)"
+            >
               <v-list-item-content>
-                <v-list-item-title v-html="marker.name"></v-list-item-title>
-                <v-list-item-subtitle v-html="`La posición de este marcador es ${marker.position}`"></v-list-item-subtitle>
+                <v-list-item-title>{{ marker.name }}</v-list-item-title>
+                <v-list-item-subtitle>
+                  La posición de este marcador es {{ marker.position }}
+                </v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
           </v-list>
         </v-col>
-        <v-col cols="12" sm="12" md="3" 
+        <v-col
+          v-if="newMarkerForm"
+          cols="12"
+          sm="12"
+          md="3"
           order="1"
           order-md="0"
-          v-if="newMarkerForm">
+        >
           <v-subheader>Nuevo sitio</v-subheader>
-          <v-form v-model="newMarker.valid" @submit="saveMarker" ref="form">
-            <v-select 
-              v-model="newMarker.type" 
+          <v-form
+            ref="form"
+            v-model="newMarker.valid"
+            @submit="saveMarker"
+          >
+            <v-select
+              v-model="newMarker.type"
               :items="[{ text: 'Ruta', value: 'route'}, { text: 'Pueblo', value: 'town' }]"
               :rules="requiredRule"
-              label="Tipo"></v-select>
-            <v-text-field v-model="newMarker.name"
+              label="Tipo"
+            />
+            <v-text-field
+              v-model="newMarker.name"
               :rules="requiredRule"
-              label="Nombre" />
-            <v-text-field :value="`${newMarker.position.lat}, ${newMarker.position.lng}`"
-              label="Posición" readonly />
+              label="Nombre"
+            />
+            <v-text-field
+              :value="`${newMarker.position.lat}, ${newMarker.position.lng}`"
+              label="Posición"
+              readonly
+            />
             <v-container>
               <v-row>
                 <v-col cols="6">
-                  <v-btn type="submit" color="success" :disabled="!newMarker.valid">Guardar</v-btn>
+                  <v-btn
+                    type="submit"
+                    color="success"
+                    :disabled="!newMarker.valid"
+                  >
+                    Guardar
+                  </v-btn>
                 </v-col>
                 <v-col cols="6">
-                  <v-btn type="button" color="danger" @click="cancelSave">Cancelar</v-btn>
+                  <v-btn
+                    type="button"
+                    color="danger"
+                    @click="cancelSave"
+                  >
+                    Cancelar
+                  </v-btn>
                 </v-col>
               </v-row>
             </v-container>
           </v-form>
         </v-col>
-        <v-col cols="12" sm="12" md="9" 
+        <v-col
+          cols="12"
+          sm="12"
+          md="9"
           order="0"
           order-md="1"
-          :style="{ height: `${maxHeight}px` }">
-          <Map 
-            v-bind:markers="markers.concat(tempMarkers)"
-            v-bind:addMarker="addMarker"
-            v-bind:deleteMarker="deleteMarker"
-            ref="map" />
+          :style="{ height: `${maxHeight}px` }"
+        >
+          <Map
+            ref="map"
+            :markers="markers.concat(tempMarkers)"
+            :add-marker="addMarker"
+            :delete-marker="deleteMarker"
+          />
         </v-col>
       </v-row>
     </v-container>
@@ -70,12 +111,12 @@
 
 <script>
 // @ is an alias to /src
-import Map from "@/components/Map.vue";
+import Map from '@/components/Map.vue';
 
 export default {
-  name: "Home",
+  name: 'Home',
   components: {
-    Map
+    Map,
   },
   data() {
     return {
@@ -85,15 +126,15 @@ export default {
       newMarkerForm: false,
       maxHeight: 500,
       requiredRule: [
-        v => !!v || 'Esto es obligatorio'
+        (v) => !!v || 'Esto es obligatorio',
       ],
       newMarker: {
         id: '',
         type: '',
         name: '',
-        position: ''
-      }
-    }
+        position: '',
+      },
+    };
   },
   methods: {
     addMarker(e) {
@@ -103,14 +144,14 @@ export default {
         type: '',
         name: '',
         valid: false,
-        position: e.latlng
-      }
+        position: e.latlng,
+      };
       this.tempMarkers.push(this.newMarker);
       this.newMarkerForm = true;
     },
     saveMarker() {
       this.$refs.form.validate();
-      if(!this.newMarker.valid) {
+      if (!this.newMarker.valid) {
         return false;
       }
 
@@ -121,9 +162,9 @@ export default {
       return true;
     },
     deleteMarker(marker) {
-      this.markers = this.markers.filter(m => m.id !== marker.id);
-      if(this.markers.length) {
-        this.updateCenter(this.markers[0])
+      this.markers = this.markers.filter((m) => m.id !== marker.id);
+      if (this.markers.length) {
+        this.updateCenter(this.markers[0]);
       }
     },
     cancelSave() {
@@ -136,10 +177,11 @@ export default {
       this.$refs.map.updateCenter(marker.position);
     },
     getMarkerListStyle() {
-      if(this.$vuetify.breakpoint.smAndUp) {
-        return { height: `${this.maxHeight}px`, overflow: 'scroll' }
+      if (this.$vuetify.breakpoint.smAndUp) {
+        return { height: `${this.maxHeight}px`, overflow: 'scroll' };
       }
-    }
-  }
+      return {};
+    },
+  },
 };
 </script>
