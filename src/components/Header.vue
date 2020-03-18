@@ -17,17 +17,18 @@
 
     <v-spacer />
 
-    <v-btn
-      href=""
-      target="_blank"
-      icon
+
+    <router-link
+      to="/profile"
+      tag="span"
     >
-      <router-link
-        to="/about"
-        tag="span"
+      <v-btn
+        href=""
+        target="_blank"
+        icon
       >
         <v-icon>person</v-icon>
-      </router-link>
-    </v-btn>
+      </v-btn>
+    </router-link>
   </v-app-bar>
 </template>

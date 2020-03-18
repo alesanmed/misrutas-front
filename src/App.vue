@@ -17,9 +17,11 @@ export default {
   components: {
     Header,
   },
-  created: () => {
+  created() {
     Axios.interceptors.response.use(undefined, (err) => {
-      if (err.status === 401 && !err.config?.__isRetryRequest) {
+      console.log(err.config);
+      // eslint-disable-next-line no-underscore-dangle
+      if ((err.response.status === 401 || err.response.status === 403) && !err.config._retry) {
         this.$store.dispatch(AUTH_LOGOUT);
         this.$router.push('/login');
       }

@@ -2,6 +2,7 @@ import Axios from 'axios';
 import {
   AUTH_REQUEST, AUTH_ERROR, AUTH_SUCCESS, AUTH_LOGOUT,
 } from '../actions/auth';
+import { USER_SAVE_ID, USER_CLEAN } from '../actions/user';
 import { login } from '../../api/auth';
 
 const initialState = {
@@ -22,17 +23,21 @@ const actions = {
       const res = await login(user);
 
       const token = res.data.accessToken;
+      const { userId } = res.data;
 
       localStorage.setItem('user-token', token);
       Axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 
       commit(AUTH_SUCCESS, token);
 
+      commit(USER_SAVE_ID, userId);
+
       return res;
     } catch (e) {
       console.log(e);
       commit(AUTH_ERROR);
       localStorage.removeItem('user-token');
+      commit(USER_CLEAN);
       throw e;
     }
   },
@@ -40,6 +45,7 @@ const actions = {
     commit(AUTH_LOGOUT);
     localStorage.removeItem('user-token');
     delete Axios.defaults.headers.common.Authorization;
+    commit(USER_CLEAN);
   },
 };
 

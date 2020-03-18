@@ -1,4 +1,5 @@
-import axios from 'axios';
+import Axios from 'axios';
+import { AUTH_SERVICE } from './config/endpoints.local';
 
 // eslint-disable-next-line import/prefer-default-export
-export const login = (user) => axios.post('http://localhost:3000/auth/login', { ...user });
+export const login = (user) => Axios.post(`${AUTH_SERVICE}/auth/login`, { ...user });

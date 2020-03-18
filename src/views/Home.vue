@@ -1,12 +1,18 @@
 <template>
   <div class="home">
-    <v-container fluid>
+    <v-container
+      class="home-container"
+      fluid
+    >
       <v-row>
-        <v-col cols="12">
+        <v-col
+          cols="12"
+          sm="12"
+        >
           Este es tu mapa con rutas, pueblos y ciudades
         </v-col>
       </v-row>
-      <v-row>
+      <v-row class="home-row">
         <v-col
           v-if="!newMarkerForm"
           cols="12"
@@ -14,7 +20,6 @@
           md="3"
           order="1"
           order-md="0"
-          :style="getMarkerListStyle()"
         >
           <v-subheader>Tus sitios</v-subheader>
           <v-list
@@ -95,7 +100,6 @@
           md="9"
           order="0"
           order-md="1"
-          :style="{ height: `${maxHeight}px` }"
         >
           <Map
             ref="map"
@@ -124,7 +128,6 @@ export default {
       markers: [],
       tempMarkers: [],
       newMarkerForm: false,
-      maxHeight: 500,
       requiredRule: [
         (v) => !!v || 'Esto es obligatorio',
       ],
@@ -176,12 +179,16 @@ export default {
     updateCenter(marker) {
       this.$refs.map.updateCenter(marker.position);
     },
-    getMarkerListStyle() {
-      if (this.$vuetify.breakpoint.smAndUp) {
-        return { height: `${this.maxHeight}px`, overflow: 'scroll' };
-      }
-      return {};
-    },
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.home, .home-container {
+  height: 100%;
+}
+
+.home-row {
+  height: 90%;
+}
+</style>
