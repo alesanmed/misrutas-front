@@ -3,7 +3,7 @@ import {
   AUTH_REQUEST, AUTH_ERROR, AUTH_SUCCESS, AUTH_LOGOUT,
 } from '../actions/auth';
 import { USER_SAVE_ID, USER_CLEAN } from '../actions/user';
-import { login } from '../../api/auth';
+import { signin } from '../../api/auth';
 
 const initialState = {
   token: localStorage.getItem('user-token') || '',
@@ -20,7 +20,7 @@ const actions = {
     try {
       commit(AUTH_REQUEST);
 
-      const res = await login(user);
+      const res = await signin(user);
 
       const token = res.data.accessToken;
       const { userId } = res.data;

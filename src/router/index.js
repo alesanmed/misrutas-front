@@ -2,27 +2,13 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
 import About from '../views/About.vue';
-import Login from '../views/Login.vue';
+import Signin from '../views/Signin.vue';
+import Signup from '../views/Signup.vue';
 import Profile from '../views/Profile.vue';
-import store from '../store';
+import loggedIn from './guards/loggedIn';
+import notLoggedIn from './guards/notLoggedIn';
 
 Vue.use(VueRouter);
-
-const loggedIn = (to, from, next) => {
-  if (store.getters.isAuthenticated) {
-    return next();
-  }
-
-  return next('/login');
-};
-
-const notLoggedIn = (to, from, next) => {
-  if (!store.getters.isAuthenticated) {
-    return next();
-  }
-
-  return next('/');
-};
 
 const routes = [
   {
@@ -40,9 +26,15 @@ const routes = [
     component: About,
   },
   {
-    path: '/login',
-    name: 'Login',
-    component: Login,
+    path: '/signin',
+    name: 'Signin',
+    component: Signin,
+    beforeEnter: notLoggedIn,
+  },
+  {
+    path: '/signup',
+    name: 'Signup',
+    component: Signup,
     beforeEnter: notLoggedIn,
   },
   {

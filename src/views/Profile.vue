@@ -8,12 +8,12 @@
       <div class="d-flex flex-nowrap justify-center">
         <div class="card-col-1">
           <v-avatar
-            color="primary"
+            color="grey lighten-2"
             class="mt-3"
             size="128"
             left
           >
-            <span class="white--text headline">{{ avatarName }}</span>
+            <span class="display-3">{{ avatar }}</span>
           </v-avatar>
         </div>
         <div class="card-col-2">
@@ -37,6 +37,7 @@
 <script>
 import { mapActions } from 'vuex';
 import { USER_REQUEST } from '../store/actions/user';
+import EMOJIS from '../assets/emojis';
 
 export default {
   name: 'Profile',
@@ -50,8 +51,8 @@ export default {
     };
   },
   computed: {
-    avatarName() {
-      return this.user.name.substring(0, 2).toUpperCase();
+    avatar() {
+      return EMOJIS[Math.floor(Math.random() * EMOJIS.length)];
     },
   },
   created() {

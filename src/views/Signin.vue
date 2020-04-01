@@ -1,9 +1,9 @@
 <template>
-  <div class="login primary">
-    <v-container class="login-container">
+  <div class="signin primary">
+    <v-container class="signin-container">
       <v-row
         align="center"
-        class="login-row"
+        class="signin-row"
       >
         <v-col
           cols="4"
@@ -14,7 +14,7 @@
               <v-form
                 ref="form"
                 v-model="user.valid"
-                @submit.prevent="login"
+                @submit.prevent="signin"
               >
                 <v-text-field
                   v-model="user.username"
@@ -36,6 +36,10 @@
                   Login
                 </v-btn>
               </v-form>
+              <span>¿No tienes cuenta? <router-link
+                to="/signup"
+              >Regístrate</router-link>
+              </span>
             </v-card-text>
           </v-card>
         </v-col>
@@ -48,7 +52,7 @@
 import { AUTH_REQUEST } from '../store/actions/auth';
 
 export default {
-  name: 'Login',
+  name: 'Signin',
   data() {
     return {
       requiredRule: [
@@ -61,7 +65,7 @@ export default {
     };
   },
   methods: {
-    async login() {
+    async signin() {
       try {
         await this.$store.dispatch(AUTH_REQUEST, this.user);
 
@@ -75,11 +79,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.login, .login-container {
+.signin, .signin-container {
   height: 100%;
 }
 
-.login-row {
+.signin-row {
   height: 90%;
 }
 </style>
