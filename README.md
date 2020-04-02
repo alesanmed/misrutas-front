@@ -1,4 +1,12 @@
-# rutas-front
+# Description
+This is the frontpage for Mis Rutas project.
+
+## Pre-requisites
+You have to first set up and run the following projects:
+
+* [mis-rutas/infrastructure](https://github.com/alesanmed/misrutas-infrastructure)
+* [mis-rutas/auth](https://github.com/alesanmed/misrutas-auth)
+* [mis-rutas/user](https://github.com/alesanmed/misrutas-user)
 
 ## Project setup
 ```
