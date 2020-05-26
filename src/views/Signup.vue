@@ -141,7 +141,6 @@ export default {
           this.user.username.errors.push(error);
         }
       } catch (e) {
-        console.log(e);
         if (index > -1) {
           this.user.username.errors.splice(index, 1);
         }
@@ -174,14 +173,13 @@ export default {
         this.signupSucceed = true;
 
         setTimeout(() => {
-          this.$router.push('/').catch((e) => console.log(e));
+          this.$router.push('/');
         }, 1000);
       } catch (e) {
         const { response } = e;
         if (response.status === 422 && response.data.code === Errors.USER_WITH_ERRORS) {
           this.user = response.data.data;
         } else {
-          console.log(e);
           this.genericError = true;
         }
       }

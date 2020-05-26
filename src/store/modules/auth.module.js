@@ -34,7 +34,6 @@ const actions = {
 
       return res;
     } catch (e) {
-      console.log(e);
       commit(AUTH_ERROR);
       localStorage.removeItem('user-token');
       commit(USER_CLEAN);

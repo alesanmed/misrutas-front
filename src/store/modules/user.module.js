@@ -26,7 +26,6 @@ const actions = {
 
       commit(USER_SUCCESS, res.data.user);
     } catch (e) {
-      console.log(e);
       commit(USER_ERROR);
 
       dispatch(AUTH_LOGOUT);

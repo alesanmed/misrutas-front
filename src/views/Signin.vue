@@ -66,13 +66,9 @@ export default {
   },
   methods: {
     async signin() {
-      try {
-        await this.$store.dispatch(AUTH_REQUEST, this.user);
+      await this.$store.dispatch(AUTH_REQUEST, this.user);
 
-        this.$router.push('/').catch((e) => console.log(e));
-      } catch (e) {
-        console.log(e);
-      }
+      this.$router.push('/');
     },
   },
 };
