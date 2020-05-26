@@ -1,5 +1,5 @@
 import Axios from 'axios';
-import { AUTH_SERVICE } from './config/endpoints.local';
+import BACKEND from './config/endpoints';
 
 // eslint-disable-next-line import/prefer-default-export
-export const signin = (user) => Axios.post(`${AUTH_SERVICE}/auth`, { ...user });
+export const signin = (user) => Axios.post(`${BACKEND}/auth`, { ...user });
